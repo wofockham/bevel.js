@@ -20,15 +20,27 @@ $(document).ready(function () {
     return statuses.join(', ');
   };
 
-  window.addEventListener('deviceorientation', function (e) {
-    $fader.css('opacity', opacity(e.beta));
-    $hud.text(status({
-      opacity: opacity(e.beta),
-      pitch: e.alpha,
-      yaw: e.beta,
-      roll: e.gamma
-    }));
-  });
+  var orientation = $(window).asEventStream('deviceorientation');
+
+  orientation.onValue(function (e) {
+      $fader.css('opacity', opacity(e.beta));
+      $hud.text(status({
+        opacity: opacity(e.beta),
+        pitch: e.alpha,
+        yaw: e.beta,
+        roll: e.gamma
+      }));
+  })
+
+  // window.addEventListener('deviceorientation', function (e) {
+  //   $fader.css('opacity', opacity(e.beta));
+  //   $hud.text(status({
+  //     opacity: opacity(e.beta),
+  //     pitch: e.alpha,
+  //     yaw: e.beta,
+  //     roll: e.gamma
+  //   }));
+  // });
 
   (window.location.hash === '#hud') && $('.hud').fadeIn();
 
