@@ -8,6 +8,10 @@ $(document).ready(function () {
   var $fader = $('.fader');
   var $hud = $('.hud');
 
+  if (window.location.hash === '#hud') {
+    $('.hud').fadeIn();
+  }
+
   var opacity = function (yaw) {
     return (yaw / 180) * 1.5;
   };
@@ -23,25 +27,12 @@ $(document).ready(function () {
   var orientation = $(window).asEventStream('deviceorientation');
 
   orientation.onValue(function (e) {
-      $fader.css('opacity', opacity(e.beta));
-      $hud.text(status({
-        opacity: opacity(e.beta),
-        pitch: e.alpha,
-        yaw: e.beta,
-        roll: e.gamma
-      }));
+    $fader.css('opacity', opacity(e.originalEvent.beta));
+    $hud.text(status({
+      opacity: opacity(e.originalEvent.beta),
+      pitch: e.originalEvent.alpha,
+      yaw: e.originalEvent.beta,
+      roll: e.originalEvent.gamma
+    }));
   })
-
-  // window.addEventListener('deviceorientation', function (e) {
-  //   $fader.css('opacity', opacity(e.beta));
-  //   $hud.text(status({
-  //     opacity: opacity(e.beta),
-  //     pitch: e.alpha,
-  //     yaw: e.beta,
-  //     roll: e.gamma
-  //   }));
-  // });
-
-  (window.location.hash === '#hud') && $('.hud').fadeIn();
-
 });
