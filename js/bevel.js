@@ -8,9 +8,7 @@ $(document).ready(function () {
   var $fader = $('.fader');
   var $hud = $('.hud');
 
-  if (window.location.hash === '#hud') {
-    $hud.fadeIn();
-  }
+  $(window).on('click', function () { $hud.fadeToggle(); });
 
   var orientation = $(window).asEventStream('deviceorientation');
   var yaw = orientation.map('.originalEvent.beta');
