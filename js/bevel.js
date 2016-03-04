@@ -13,8 +13,8 @@ $(document).ready(function () {
   }
 
   var orientation = $(window).asEventStream('deviceorientation');
-
   var yaw = orientation.map('.originalEvent.beta');
+
   var opacity = yaw.map(function (v) {
     return (v / 180) * 1.5;
   });
@@ -28,4 +28,5 @@ $(document).ready(function () {
     ].join('<br>');
   });
   status.assign($hud, 'html');
+
 });
